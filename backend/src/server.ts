@@ -1,4 +1,7 @@
-import express, { request, response } from 'express';
+import express from 'express';
+
+import './database/connection';
+
 
 const app = express();
 
@@ -19,7 +22,7 @@ app.use(express.json());
 // Body: http://localhost:3333/users/1 (identificar um recurso com id=1)
 
 
-app.post('/users', (request, response) => {
+app.get('/users', (request, response) => {
     return response.json({message: 'Hello World'});
 });
 
