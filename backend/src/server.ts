@@ -1,4 +1,6 @@
 import express from 'express';
+import { getRepository } from 'typeorm';
+import Orphanage from './models/Orphanage';
 
 import './database/connection';
 
@@ -22,7 +24,31 @@ app.use(express.json());
 // Body: http://localhost:3333/users/1 (identificar um recurso com id=1)
 
 
-app.get('/users', (request, response) => {
+app.post('/orphanages', async (request, response) => {
+    const {
+        name,
+        latitude,
+        longitude,
+        about,
+        instructions,
+        opening_hours,
+        open_on_weekends,
+    } = request.body;
+
+    const orphanagesRepository = getRepository(Orphanage);
+
+    const orphanage = orphanagesRepository.create({
+        name,
+        latitude,
+        longitude,
+        about,
+        instructions,
+        opening_hours,
+        open_on_weekends,
+    });
+
+    await orphanagesRepository.save(orphanage);
+    
     return response.json({message: 'Hello World'});
 });
 
