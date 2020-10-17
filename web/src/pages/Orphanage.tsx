@@ -1,15 +1,48 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
+import { useParams } from 'react-router-dom';
 
 import Sidebar from "../components/Sidebar";
 import mapIcon from "../utils/mapIcon";
+import api from "../services/api";
 
 import '../styles/pages/orphanage.css';
 
 
+interface Orphanage {
+  latitude: number;
+  longitude: number;
+  name: string;
+  description: string;
+  instructions: string;
+  opening_hours: string;
+  open_on_weekends: string;
+  images: Array<{
+    url: string;
+  }>;
+}
+
+interface OrphanageParams {
+  id: string;
+}
+
 export default function Orphanage() {
+
+  const params = useParams<OrphanageParams>();
+
+  const [orphanage, setOrphanage] = useState<Orphanage>();
+
+    useEffect(() => {
+        api.get(`orphanages/${params.id}`).then(response => {
+            setOrphanage(response.data);
+        });
+    }, [params.id]);
+
+    if (!orphanage) {
+      return <p>Carregando...</p>;
+    }
 
   return (
     <div id="page-orphanage">
@@ -17,7 +50,7 @@ export default function Orphanage() {
 
       <main>
         <div className="orphanage-details">
-          <img src="https://www.gcd.com.br/wp-content/uploads/2020/08/safe_image.jpg" alt="Lar das meninas" />
+          <img src={orphanage.images[0].url} alt={orphanage.name} />
 
           <div className="images">
             <button className="active" type="button">
@@ -41,8 +74,8 @@ export default function Orphanage() {
           </div>
           
           <div className="orphanage-details-content">
-            <h1>Lar das meninas</h1>
-            <p>Presta assistência a crianças de 06 a 15 anos que se encontre em situação de risco e/ou vulnerabilidade social.</p>
+            <h1>{orphanage.name}</h1>
+            <p>{orphanage.description}</p>
 
             <div className="map-container">
               <Map 
