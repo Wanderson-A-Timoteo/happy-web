@@ -1,11 +1,11 @@
 import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
-import { FiClock, FiInfo, FiArrowLeft } from "react-icons/fi";
+import { FiClock, FiInfo } from "react-icons/fi";
 import { Map, Marker, TileLayer } from "react-leaflet";
-import { useHistory } from 'react-router-dom';
 import L from 'leaflet';
 
 import mapMarkerImg from '../images/map-marker.svg';
+import Sidebar from "../components/Sidebar";
 
 import '../styles/pages/orphanage.css';
 
@@ -18,19 +18,10 @@ const happyMapIcon = L.icon({
 })
 
 export default function Orphanage() {
-  const { goBack } = useHistory();
 
   return (
     <div id="page-orphanage">
-      <aside>
-        <img src={mapMarkerImg} alt="Happy" />
-
-        <footer>
-          <button type="button" onClick={goBack}>
-            <FiArrowLeft size={24} color="#FFF" />
-          </button>
-        </footer>
-      </aside>
+      <Sidebar />
 
       <main>
         <div className="orphanage-details">
@@ -73,8 +64,8 @@ export default function Orphanage() {
                 doubleClickZoom={false}
               >
                 <TileLayer 
-                  url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                  {/*url={`https://api.mapbox.com/styles/v1/mapbox/light-v10/tiles/256/{z}/{x}/{y}@2x?access_token=${process.env.REACT_APP_MAPBOX_TOKEN}`}*/}
+                  url="https://a.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                  
                 />
                 <Marker interactive={false} icon={happyMapIcon} position={[-27.2092052,-49.6401092]} />
               </Map>
