@@ -15,5 +15,6 @@ yarn typeorm migration:create -n create_images
 yarn typeorm migration:run
 yarn add multer
 yarn add @types/multer -D
+yarn add express-async-errors
 
 ```
