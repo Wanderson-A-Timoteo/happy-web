@@ -63,7 +63,7 @@ export default function Orphanage() {
                   setActiveImageIndex(index);
                   }}
                 >
-                  <img src={image.url} alt="{orphanage.name} />
+                  <img src={image.url} alt={orphanage.name} />
                 </button>
               );
             })}
