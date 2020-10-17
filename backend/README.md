@@ -17,5 +17,6 @@ yarn add multer
 yarn add @types/multer -D
 yarn add express-async-errors
 yarn add yup
+yarn add @types/yup -D
 
 ```
