@@ -16,5 +16,6 @@ yarn typeorm migration:run
 yarn add multer
 yarn add @types/multer -D
 yarn add express-async-errors
+yarn add yup
 
 ```
