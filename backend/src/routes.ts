@@ -1,7 +1,12 @@
 import { Router } from 'express';
+import multer from 'multer';
+
+import uploadConfig from './config/upload';
+
 import OrphanagesController from './controllers/OrphanagesController';
 
 const routes = Router();
+const upload = multer(uploadConfig);
 
 // Rotas: /users
 // Recursos: Usuarios
@@ -18,6 +23,9 @@ const routes = Router();
 // Body: http://localhost:3333/users/1 (identificar um recurso com id=1)
 
 
-routes.post('/orphanages', OrphanagesController.create);
+routes.get('/orphanages', OrphanagesController.index);
+routes.get('/orphanages/id:', OrphanagesController.show);
+routes.post('/orphanages', upload.array('images'), OrphanagesController.create);
+
 
 export default routes;
