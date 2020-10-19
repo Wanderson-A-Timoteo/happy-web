@@ -91,7 +91,11 @@ yarn start
 ```
 yarn dev
 ```
-Pronto! dessa forma os dois projetos estarão rodando localmente em sua maquina
+
+Pronto! dessa forma os dois projetos estarão rodando localmente em sua maquina, acesse:
+```
+localhost:3000
+```
 
 
 ## 🚩 Tenho Dúvidas... O que fazer? 
