@@ -4,7 +4,7 @@ import { LeafletMouseEvent } from 'leaflet';
 import { useHistory } from "react-router-dom";
 
 
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 
 import Sidebar from "../components/Sidebar";
 import mapIcon from "../utils/mapIcon";
@@ -25,7 +25,7 @@ export default function OrphanageMap() {
   const [opening_hours, setOpeningHours] = useState('');
   const [open_on_weekends, setOpenOnWeekends] = useState(true);
   const [images, setImages] = useState<File[]>([]);
-  const [previewImages, setPreviewImages] =  useState<string[]>([]);
+  const [previewImages, setPreviewImages] =  useState<{name: string, url: string}[]>([]);
 
   function handleMapClick(event: LeafletMouseEvent) {
     const { lat, lng } = event.latlng;
@@ -40,12 +40,16 @@ export default function OrphanageMap() {
     if ( !event.target.files){
       return;
     }
-    const selectedImages = Array.from(event.target.files);
+    const selectedImages = images.concat(Array.from(event.target.files));
     
     setImages(selectedImages);
 
     const selectedImagesPreview = selectedImages.map(image => {
-      return URL.createObjectURL(image);
+      return {
+        name: image.name,
+        url: URL.createObjectURL(image),
+      
+      }
     })
 
     setPreviewImages(selectedImagesPreview);
@@ -136,7 +140,22 @@ export default function OrphanageMap() {
 
                 {previewImages.map(image => {
                   return (
-                    <img key={image} src={image} alt={name} />
+                    <div className="image-preview">
+                      <img key={image.name} src={image.url} alt={name} />
+                      <FiX 
+                        color="#FFF"
+                        className="delete-image"
+                        onClick={() => {
+                          setImages(images.filter((deletedImage) => {
+                            return image.name !== deletedImage.name;
+                          }))
+                        
+                          setPreviewImages(previewImages.filter((deletedImage) => {
+                            return image !== deletedImage;
+                        }))
+                        }}
+                      />
+                    </div>
                   )
                 })}
 
@@ -202,4 +221,3 @@ export default function OrphanageMap() {
   );
 }
 
-// return `https://a.tile.openstreetmap.org/${z}/${x}/${y}.png`;
